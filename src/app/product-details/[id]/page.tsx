@@ -14,6 +14,7 @@ import { BsShop } from "react-icons/bs";
 export default function ProductDetails({ params }: { params: { id: string } }) {
 
     const [productData, setProductData] = useState<any>(null);
+    // const [addToCart, setAddToCart] = useState(second)
     const [Quantity, setQuantity] = useState(1)
 
     useEffect(() => {
@@ -45,6 +46,16 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
         }
     }
 
+    const handleAddToCart = async () => {
+        try {
+            const res = await fetch('/api/cart', {
+                method
+            })
+        } catch (error) {
+
+        }
+    }
+
     return (
         <main>
             {
@@ -61,7 +72,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
                                 <h3 className=" md:text-xl text-[11px] font-semibold md:mt-[50px] mt-[20px] md:mb-[15px] ">Select Quantity</h3>
                                 <span className="flex text-center">
                                     <button className=" md:text-4xl" onClick={() => decrementQuantity()}><AiFillMinusCircle /></button>
-                                    <p className="md:text-2xl  md:px-8 px-4 md:mx-3 mx-1 border-2 border-orange-900 rounded-lg">{Quantity}</p>
+                                    <p className="md:text-2xl font-sans font-semibold md:px-8 px-4 md:mx-3 mx-1 border-2 border-orange-900 rounded-lg">{Quantity}</p>
                                     <button className=" md:text-4xl" onClick={() => incrementQuantity()}><AiFillPlusCircle /></button>
                                 </span>
                             </span>
