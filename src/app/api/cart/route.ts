@@ -7,12 +7,15 @@ import { NextRequest, NextResponse } from "next/server"
 const userId = "565e20b6-1e9a-4b4e-a292-f59bf59b4f57"
 
 export const POST = async (req: NextRequest) => {
-    const { productId, quantity } = await req.json()
+    const { productId, productTitle, productPrice, imageUrl, quantity } = await req.json()
 
     try {
         const postData = await db.insert(cartData).values({
             uid: userId,
             productId,
+            productTitle,
+            productPrice,
+            imageUrl,
             quantity
         })
         return NextResponse.json({

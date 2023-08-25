@@ -46,12 +46,15 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
         }
     }
 
-    const handleAddToCart = async (id: string) => {
+    const handleAddToCart = async (id: string, title: string, price: number, url: string) => {
         try {
             const res = await fetch('/api/cart', {
                 method: "POST",
                 body: JSON.stringify({
                     productId: id,
+                    productTitle: title,
+                    productPrice: price,
+                    imageUrl: url,
                     quantity: Quantity
                 })
             })
@@ -70,7 +73,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
                         <div className=" inline-block border-[2px] rounded-xl  bg-transparent border-orange-800 px-[60px] py-[80px]">
                             <Image className=" object-contain max-w-[400px] max-h-[400px] h-[400px]" src={urlForImage(productData.productImageMain).url()} alt="" height={400} width={400} />
                         </div>
-                        <div className="w-1/2 pl-10">
+                        <div className="w-1/3 pl-10">
                             <h1 className="text-4xl font-sans font-bold">{productData.productTitle}</h1>
                             <h2 className="text-xl font-sans font-bold mt-10">Price: <span className="text-3xl">$ {productData.productPrice}</span></h2>
 
@@ -83,7 +86,7 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
                                 </span>
                             </span>
 
-                            <button onClick={() => handleAddToCart(productData._id)} className="flex gap-x-3 text-2xl font-sans font-bold text-orange-900 bg-transparent border-[3px] rounded-sm border-orange-900 px-6 py-3 mt-10 hover:bg-orange-900 hover:text-white hover:scale-105 active:scale-100  transition-all" >Add to Cart <BsShop className="mt-1" /> </button>
+                            <button onClick={() => handleAddToCart(productData._id, productData.productTitle, productData.productPrice, urlForImage(productData.productImageMain).url())} className="flex gap-x-3 text-2xl font-sans font-bold text-orange-900 bg-transparent border-[3px] rounded-sm border-orange-900 px-6 py-3 mt-10 hover:bg-orange-900 hover:text-white hover:scale-105 active:scale-100  transition-all" >Add to Cart <BsShop className="mt-1" /> </button>
                         </div>
 
 
@@ -93,6 +96,6 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
                 )
 
             }
-        </main>
+        </main >
     )
 }
