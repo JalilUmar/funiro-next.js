@@ -38,12 +38,6 @@ export default function Header() {
         })
     }
 
-
-
-
-
-
-
     return (
         <header className="flex justify-center items-center py-5 bg-orange-950">
             <section className="w-1/4">
