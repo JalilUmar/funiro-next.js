@@ -5,19 +5,20 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { ImCart } from "react-icons/im";
+import { client } from "../../../sanity/lib/client";
 
 
 
 export default function Header() {
-    const [products, setProducts] = useState<any>(null)
+    const [products, setProducts] = useState<any>([])
     const [isOpen, setIsOpen] = useState(false);
     const [deleted, setdeleted] = useState(false)
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/cart')
+        fetch('http://localhost:3000/api/cart', { method: 'GET' })
             .then((res) => res.json())
             .then((data) => setProducts(data))
-    }, [deleted])
+    }, [products, deleted])
 
     const toggleCart = () => {
         setIsOpen(!isOpen);
@@ -31,6 +32,12 @@ export default function Header() {
             })
         })
     }
+
+
+
+
+
+
 
     return (
         <header className="flex justify-center items-center py-5 bg-orange-950">
@@ -60,8 +67,8 @@ export default function Header() {
                                     <h2 className="text-2xl font-sans font-bold mb-4">Shopping Cart</h2>
                                     <button onClick={toggleCart} className="ml-auto text-2xl font-sans px-4 pb-[5px]  bg-slate-500 bg-opacity-10 rounded-full">x</button>
                                 </div>
-                                {products.map((product: any) => (
-                                    <div key={product.id} className="flex bg-slate-400 bg-opacity-40 py-4 px-2 rounded-xl justify-between items-center gap-x-5 mb-3">
+                                {productData.map((product: any) => (
+                                    <div key={product._id} className="flex bg-slate-400 bg-opacity-40 py-4 px-2 rounded-xl justify-between items-center gap-x-5 mb-3">
                                         <Image className="max-w-[120px] max-h-[120px] " src={'/images/img-1.png'} alt="" height={120} width={120} />
                                         <span className="grid mr-auto font-sans ">
                                             <span className="text-xl font-bold text-orange-800">{product.name}</span>

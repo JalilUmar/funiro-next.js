@@ -27,11 +27,9 @@ export const POST = async (req: NextRequest) => {
 export const GET = async (req: NextRequest) => {
 
     try {
-        const getCartData = await db.select().from(cartData).where(eq(cartData.uid, userId))
+        const res = await db.select().from(cartData).where(eq(cartData.uid, userId))
 
-        return NextResponse.json({
-            getCartData
-        })
+        return NextResponse.json(res)
     } catch (error) {
         console.log((error as { message: string }).message)
     }

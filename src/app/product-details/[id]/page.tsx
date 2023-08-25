@@ -46,13 +46,19 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
         }
     }
 
-    const handleAddToCart = async () => {
+    const handleAddToCart = async (id: string) => {
         try {
             const res = await fetch('/api/cart', {
-                method
+                method: "POST",
+                body: JSON.stringify({
+                    productId: id,
+                    quantity: Quantity
+                })
             })
+            console.log('added to cart')
+            return res
         } catch (error) {
-
+            console.log(`error on handleAddToCart ....`, error)
         }
     }
 
@@ -77,13 +83,13 @@ export default function ProductDetails({ params }: { params: { id: string } }) {
                                 </span>
                             </span>
 
-                            <button className="flex gap-x-3 text-2xl font-sans font-bold text-orange-900 bg-transparent border-[3px] rounded-sm border-orange-900 px-6 py-3 mt-10 hover:bg-orange-900 hover:text-white hover:scale-105 active:scale-100  transition-all" >Add to Cart <BsShop className="mt-1" /> </button>
+                            <button onClick={() => handleAddToCart(productData._id)} className="flex gap-x-3 text-2xl font-sans font-bold text-orange-900 bg-transparent border-[3px] rounded-sm border-orange-900 px-6 py-3 mt-10 hover:bg-orange-900 hover:text-white hover:scale-105 active:scale-100  transition-all" >Add to Cart <BsShop className="mt-1" /> </button>
                         </div>
 
 
                     </section>
                 ) : (
-                    <p>no product data found</p>
+                    <p className="text-center ">Loading .....</p>
                 )
 
             }
