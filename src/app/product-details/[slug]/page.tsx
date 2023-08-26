@@ -7,33 +7,34 @@ import { client } from "../../../../sanity/lib/client";
 import { AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
 import Link from "next/link";
 import { BsShop } from "react-icons/bs";
+import { Slug } from "sanity";
 
 
 
 
-export default function ProductDetails({ params }: { params: { slug: string } }) {
+export default function ProductDetails({ params }: { params: { slug: Slug } }) {
 
-    const [productData, setProductData] = useState<any>({});
+    const [productData, setProductData] = useState<any>(null);
     // const [addToCart, setAddToCart] = useState(second)
     const [Quantity, setQuantity] = useState(1)
 
     useEffect(() => {
         const fetchProductData = async () => {
-            const res = await client.fetch(`*[_type=="products" && productTitle == $id]{
+            const res = await client.fetch(`*[_type=="products" && _id == $productTitle]{
                 _id,
-              productImageMain,
+                productImageMain,
                 productTitle ,
                 productPrice ,
                 productDescription,
             }` , {
-                id: params.slug
+                productTitle: params.slug
             })
             console.log(res)
             setProductData(res[0]);
         };
 
         fetchProductData();
-    }, [productData, params.slug]);
+    }, [params.slug]);
 
     const incrementQuantity = () => {
         if (Quantity < 9) {
