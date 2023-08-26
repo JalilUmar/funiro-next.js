@@ -11,29 +11,29 @@ import { BsShop } from "react-icons/bs";
 
 
 
-export default function ProductDetails({ params }: { params: { id: string } }) {
+export default function ProductDetails({ params }: { params: { slug: string } }) {
 
-    const [productData, setProductData] = useState<any>(null);
+    const [productData, setProductData] = useState<any>({});
     // const [addToCart, setAddToCart] = useState(second)
     const [Quantity, setQuantity] = useState(1)
 
     useEffect(() => {
         const fetchProductData = async () => {
-            const res = await client.fetch(`*[_type=="products" && _id == $id]{
+            const res = await client.fetch(`*[_type=="products" && productTitle == $id]{
                 _id,
               productImageMain,
                 productTitle ,
                 productPrice ,
                 productDescription,
             }` , {
-                id: params.id
+                productTitle: params.slug
             })
             console.log(res)
-            setProductData(res[0]); // Assuming the query returns an array
+            setProductData(res[0]);
         };
 
         fetchProductData();
-    }, [params.id]);
+    }, [productData, params.id]);
 
     const incrementQuantity = () => {
         if (Quantity < 9) {
