@@ -26,14 +26,14 @@ export default function ProductDetails({ params }: { params: { slug: string } })
                 productPrice ,
                 productDescription,
             }` , {
-                productTitle: params.slug
+                id: params.slug
             })
             console.log(res)
             setProductData(res[0]);
         };
 
         fetchProductData();
-    }, [productData, params.id]);
+    }, [productData, params.slug]);
 
     const incrementQuantity = () => {
         if (Quantity < 9) {
